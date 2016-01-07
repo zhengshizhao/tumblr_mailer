@@ -23,18 +23,20 @@ function csvParse(csvFileIn){
 	}
 	return arrayFileOut;
 }
+
 var csv_data = csvParse(csvFile);
 
 function mailTemlateReplace(mailTemlateIn, nameFile){
-	for (var i =0; i < nameFile.length; i++){
-		mailTemlateIn = mailTemlateIn.replace(/{{FIRST_NAME}}/g, nameFile[i]['firstName']);
-        mailTemlateIn = mailTemlateIn.replace(/{{NUM_MONTHS_SINCE_CONTACT}}/g, nameFile[i]['numMonthsSinceContact']);
-		}
+	mailTemlateIn = mailTemlateIn.replace(/{{FIRST_NAME}}/g, nameFile['firstName']);
+        mailTemlateIn = mailTemlateIn.replace(/{{NUM_MONTHS_SINCE_CONTACT}}/g, nameFile['numMonthsSinceContact']);
+		
     return mailTemlateIn;
 }
+for (var i =0; i < csv_data.length; i++){
+	var mailTemlate_data = mailTemlateReplace(mailTemlate, csv_data[i]);
+        console.log(mailTemlate_data);
+}
 
-var mailTemlate_data = mailTemlateReplace(mailTemlate, csv_data);
 
 
 //console.log(csv_data);
-console.log(mailTemlate_data);
