@@ -1,6 +1,8 @@
 var fs = require('fs');
 
 var csvFile = fs.readFileSync("friend_list.csv","utf8");
+var mailTemlate = fs.readFileSync("email_template.html", "utf8");
+
 
 function csvParse(csvFileIn){
         var arrayFileOut = [];
@@ -22,4 +24,17 @@ function csvParse(csvFileIn){
 	return arrayFileOut;
 }
 var csv_data = csvParse(csvFile);
-console.log(csv_data);
+
+function mailTemlateReplace(mailTemlateIn, nameFile){
+	for (var i =0; i < nameFile.length; i++){
+		mailTemlateIn = mailTemlateIn.replace(/{{FIRST_NAME}}/g, nameFile[i]['firstName']);
+        mailTemlateIn = mailTemlateIn.replace(/{{NUM_MONTHS_SINCE_CONTACT}}/g, nameFile[i]['numMonthsSinceContact']);
+		}
+    return mailTemlateIn;
+}
+
+var mailTemlate_data = mailTemlateReplace(mailTemlate, csv_data);
+
+
+//console.log(csv_data);
+console.log(mailTemlate_data);
